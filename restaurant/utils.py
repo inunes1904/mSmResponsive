@@ -2,9 +2,11 @@ import requests as r
 
 
 def getAllitems():
-    
-    test = r.get('http://localhost:8080/api/v1/items/all').json()
+    apiUrl = 'http://localhost:8080/api/v1/items/all'
+    all_items = r.get(apiUrl).json()
 
-    print(test)
+    return all_items
+
+
 
     

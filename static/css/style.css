@@ -223,14 +223,17 @@ background-color: var(--color--primary);
   }
 
   .btnAdd{
-    width:40%;
+    height: 40px;
+    width:120px;
     background-color: var(--color--primary);
     border-radius: 5px;
     color:white;
+    
   }
 
   .btnAdd:hover{
-    width:40%;
+    height: 40px;
+    width:120px;
     background-color: var(--color-primary-variant);
     border-radius: 5px;
     color: var(--color--primary);
