@@ -1,35 +1,52 @@
+{% load static %}
 <!DOCTYPE html>
 <html><head>
 	<title>Slide Navbar</title>
-	<link rel="stylesheet" type="text/css" href="login.css">
+	
+	<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&amp;display=swap" rel="stylesheet">
+
 </head>
-<body>
-	<img class="logo" src="mall_safe_meal.png" alt="">
+<body> 
+	
+	{% if messages %}
+		{% for message in messages %}
+		<div class="alert alert--info" style="width:650px;">
+			
+		   <button class="alert__close">{{message}} <b class="alert-close-i">&Cross;</b></button>
+		</div>
+		{% endfor %}
+ 	{%endif%}
+		
+	<img class="logo" src="{% static 'images/mall_safe_meal.png' %}" alt="">
 	<div class="main">  	
 		
 		<input type="checkbox" id="chk" aria-hidden="true">
 		
 			<div class="signup">
 				
-				<form>
-					
+				<form name="form" method="post" url="login">
+					{% csrf_token %}
 					<label style="color: #94395b;" for="chk" aria-hidden="true">Criar Conta</label>
-					<input type="text" name="txt" placeholder="User name" required="">
+					<input type="text" name="username" placeholder="Nome de Utilizador" required="">
 					<input type="email" name="email" placeholder="Email" required="">
 					<input type="password" name="pswd" placeholder="Password" required="">
-					<button>Entrar</button>
+					<input type="password" name="pswd2" placeholder="Confirmar Password" required="">
+					<button>Registar</button>
 				</form>
 			</div>
 
 			<div class="login">
-				<form>
-					<label for="chk" style="color: #94395b;" aria-hidden="true">Login</label>
-					<input type="email" name="email" placeholder="Email" required="">
+				<form name="form" method="post" url="login">
+					{% csrf_token %}
+					<label for="chk" style="color: #94395b;" aria-hidden="true">Entrar</label>
+					<input type="text" name="username" placeholder="Username" required="">
 					<input type="password" name="pswd" placeholder="Password" required="">
-					<button>Login</button>
+					<button type="submit">Entrar</button>
 				</form>
+			
 			</div>
 	</div>
-
-</body></html>
+	<script src="{% static 'js/uikit.js' %}"></script>
+</body>
+</html>

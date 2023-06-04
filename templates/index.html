@@ -1,6 +1,18 @@
 
 {% include 'header.html' %}
+{% load static %}
 
+{% if messages %}
+{% for message in messages %}
+<div style="text-align: center;">
+</br>
+  <div class="alert alert--{{message.tags}} alert-size" >
+    <p class="alert__message alert-text-pos" >{{message}}</p>
+    <button class="alert__close alert-close-i">&Cross;</button>
+  </div>
+</div>
+  {% endfor %}
+  {%endif%}
  <!-- RESTAURANTS CATEGORIES -->
     <div class="container my-4 tryOut" style="align-items: center;">
           <h2 class="titleFeatureCategoria" style="padding-top: 20px;">CATEGORIAS</h2>
@@ -166,6 +178,6 @@
 
 {% include 'footer.html' %}
 
-
+<script src="{% static 'js/uikit.js' %}"></script>
 </body>
 </html>

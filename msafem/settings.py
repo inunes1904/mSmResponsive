@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'restaurant.apps.RestaurantConfig',
+    'user.apps.UserConfig',
     'msafem',
     
 ]

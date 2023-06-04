@@ -10,7 +10,7 @@ body{
 }
 .main{
 	width: 350px;
-	height: 500px;
+	height: 580px;
 	background: rgb(255, 255, 255);
 	overflow: hidden;
 	background: linear-gradient(to bottom, rgb(255, 255, 255), #94395b, rgba(148, 57, 91, 0.8));
@@ -48,13 +48,13 @@ input{
 	border-radius: 5px;
 }
 button{
-	width: 60%;
+	width: 65%;
 	height: 40px;
 	margin: 10px auto;
 	justify-content: center;
 	display: block;
 	color: #fff;
-	background: rgb(50, 50, 50, 0.8);
+	background: #5f616c;
 	font-size: 1em;
 	font-weight: bold;
 	margin-top: 20px;
@@ -65,31 +65,43 @@ button{
 	cursor: pointer;
 }
 button:hover{
-	background: rgba(133, 1, 49, 0.4);
+	background: rgba(133, 1, 49, 0.8);
 }
 .login{
-	height: 460px;
+	height: 560px;
 	background: #eee;
 	border-radius: 60% / 10%;
 	transform: translateY(-180px);
 	transition: .8s ease-in-out;
 }
 .login label{
-	color: rgb(50, 50, 50, 0.8);
+	color: #5f616c;
 	transform: scale(.6);
 }
+
+.alert-close-i{
+	font-size: 2rem; 
+	position: absolute; 
+	transform: translateY(-25px)  
+	translateX(+30px);
+}
+
+.alert-close-i:hover{
+	color:#5f616c;
+}
+
 
 .logo{
     height: 125px;
     position: absolute;
-    transform: translateY(-325px)  translateX(-0px);
-   filter: drop-shadow(-3px -3px 2px rgba(255, 255, 255, 0.9))
+    transform: translateY(-305px)  translateX(-0px);
+   	filter: drop-shadow(-3px -3px 2px rgba(255, 255, 255, 0.9))
            drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.2))
            drop-shadow(15px 15px 15px rgba(0, 0, 0, 0.2))
 }   
 
 #chk:checked ~ .login{
-	transform: translateY(-500px);
+	transform: translateY(-550px);
 }
 #chk:checked ~ .login label{
 	transform: scale(1);	
@@ -97,3 +109,18 @@ button:hover{
 #chk:checked ~ .signup label{
 	transform: scale(.6);
 }
+
+
+/*=======================
+  Fixed Position Alerts Wrapper
+========================*/
+
+.alert {
+	position: fixed;
+	left: 50%;
+	top: 20px;
+	transform: translate(-50%, -50%);
+  
+  
+	z-index: 99999;
+  }
