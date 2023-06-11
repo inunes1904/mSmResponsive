@@ -13,6 +13,8 @@
 </div>
   {% endfor %}
   {%endif%}
+
+
  <!-- RESTAURANTS CATEGORIES -->
     <div class="container my-4 tryOut" style="align-items: center;">
           <h2 class="titleFeatureCategoria" style="padding-top: 20px;">CATEGORIAS</h2>
@@ -35,149 +37,72 @@
           </div>
           <div style="display: inline-block;"   >
               <img class=" marginsCards  card-img-New  " src="https://insanelygoodrecipes.com/wp-content/uploads/2021/12/Spaghetti-Bolognese-with-Basil-in-a-Plate.jpg" alt="Card image cap">
-              <p class="categorie">Massas</p>
+              <p class="categorie">Massa</p>
           </div>
 
       
     <h2 class="titleFeature">EM DESTAQUE  <i class="fa-solid fa-arrow-right mx-5 my-5 corPrincipal"></i> </h2>
    
+    {% for rest in restaurantes  %}
+    {% if rest.destaque == 'destaque' %}
+    <a href="{% url 'restaurant' rest.id %}">
     <div class="card marginsCards inlineTrue mx-3 " style="width: 18rem;">
-      <img src="https://media-manager.noticiasaominuto.com/1920/naom_63777f3180bc6.jpg" class="card-img-top imageCardSize" alt="...">
+      <img src="{% static rest.imagem.url %}" class="card-img-top imageCardSize" alt="...">
       <div class="card-body">
-        <h4 class="card-title cinzaHard" >Nome Restaurante</h4>
-        <p class="card-text cinzaHardTwo"><i class="fa-solid fa-star corPrincipal"></i> &#160;&#160;&#160;4.5 • Categoria Tipo</p>
+        <h4 class="card-title cinzaHard" >{{rest.nome}}</h4>
+        <p class="card-text cinzaHardTwo"><i class="fa-solid fa-star corPrincipal"></i> &#160;&#160;&#160;{{rest.rating}} • {{rest.tipo}}</p>
         
       </div>
-      <div class="card-footer cardBackground"><i class="fa-regular fa-clock"></i> &#160;&#160;&#160;Tempo médio • 7 minutos</div>
+      <div class="card-footer cardBackground"><i class="fa-regular fa-clock"></i> &#160;&#160;&#160;Tempo médio • {{rest.tempo_medio}} minutos</div>
     </div>
-      
-      <div class="card  marginsCards inlineTrue mx-3" style="width: 18rem;" >
-        <img src="https://images.deliveryhero.io/image/fd-tr/LH/j3aj-hero.jpg?width=2500&height=625&quality=45" class="card-img-top imageCardSize" alt="...">
-        <div class="card-body">
-          <h4 class="card-title cinzaHard" >Nome Restaurante</h4>
-          <p class="card-text cinzaHardTwo"><i class="fa-solid fa-star corPrincipal"></i> &#160;&#160;&#160;4.5 • Categoria Tipo</p>
-          
-        </div>
-        <div class="card-footer cardBackground"><i class="fa-regular fa-clock"></i> &#160;&#160;&#160;Tempo médio • 7 minutos</div>
-      </div>
-
-      <div class="card marginsCards inlineTrue mx-3" style="width: 18rem;">
-        <img src="https://res.cloudinary.com/tf-lab/image/upload/restaurant/52438179-412a-4ea9-ac54-91eb881f1588/f5c22c1f-7ef0-4439-9a2e-fe2012c911bf.jpg"
-        class="card-img-top imageCardSize" alt="...">
-        <div class="card-body">
-          <h4 class="card-title cinzaHard" >Nome Restaurante</h4>
-          <p class="card-text cinzaHardTwo"><i class="fa-solid fa-star corPrincipal"></i> &#160;&#160;&#160;4.5 • Categoria Tipo</p>
-          
-        </div>
-        <div class="card-footer cardBackground"><i class="fa-regular fa-clock"></i> &#160;&#160;&#160;Tempo médio • 7 minutos</div>
-      </div>
-
-      <div class="card marginsCards inlineTrue mx-3"  style="width: 18rem;">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaLM9MWJghDrNExKdtPLDgYNlpstcUi0uCig&usqp=CAU" class="card-img-top imageCardSize" alt="...">
-        <div class="card-body">
-          <h4 class="card-title cinzaHard" >Nome Restaurante</h4>
-          <p class="card-text cinzaHardTwo"><i class="fa-solid fa-star corPrincipal"></i> &#160;&#160;&#160;4.5 • Categoria Tipo</p>
-          
-        </div>
-        <div class="card-footer cardBackground"><i class="fa-regular fa-clock"></i> &#160;&#160;&#160;Tempo médio • 7 minutos</div>
-      </div>
-    
+  </a>
+    {% endif %}
+    {% endfor  %}  
+     
     <h2 class="titleFeature">DESCONTOS  <i class="fa-solid fa-arrow-right mx-5 my-5 corPrincipal"></i> </h2>
     
-   
-    <div class="card marginsCards inlineTrue mx-3" style="width: 18rem;">
-      <img src="https://media-manager.noticiasaominuto.com/1920/naom_63777f3180bc6.jpg" class="card-img-top imageCardSize" alt="...">
+    {% for rest in restaurantes  %}
+    {% if rest.destaque == 'desconto' %}
+    <a href="{% url 'restaurant' rest.id %}">
+    <div class="card marginsCards inlineTrue mx-3 " style="width: 18rem;">
+      <img src="{% static rest.imagem.url %}" class="card-img-top imageCardSize" alt="...">
       <div class="card-body">
-        <h4 class="card-title cinzaHard" >Nome Restaurante</h4>
-        <p class="card-text cinzaHardTwo"><i class="fa-solid fa-star corPrincipal"></i> &#160;&#160;&#160;4.5 • Categoria Tipo</p>
+        <h4 class="card-title cinzaHard" >{{rest.nome}}</h4>
+        <p class="card-text cinzaHardTwo"><i class="fa-solid fa-star corPrincipal"></i> &#160;&#160;&#160;4.5 • {{rest.tipo}}</p>
         
       </div>
       <div class="card-footer cardBackground"><i class="fa-regular fa-clock"></i> &#160;&#160;&#160;Tempo médio • 7 minutos</div>
     </div>
-      
-      <div class="card  marginsCards inlineTrue mx-3" style="width: 18rem;" >
-        <img src="https://images.deliveryhero.io/image/fd-tr/LH/j3aj-hero.jpg?width=2500&height=625&quality=45" class="card-img-top imageCardSize" alt="...">
-        <div class="card-body">
-          <h4 class="card-title cinzaHard" >Nome Restaurante</h4>
-          <p class="card-text cinzaHardTwo"><i class="fa-solid fa-star corPrincipal"></i> &#160;&#160;&#160;4.5 • Categoria Tipo</p>
-          
-        </div>
-        <div class="card-footer cardBackground"><i class="fa-regular fa-clock"></i> &#160;&#160;&#160;Tempo médio • 7 minutos</div>
-      </div>
-
-      <div class="card marginsCards inlineTrue mx-3" style="width: 18rem;">
-        <img src="https://res.cloudinary.com/tf-lab/image/upload/restaurant/52438179-412a-4ea9-ac54-91eb881f1588/f5c22c1f-7ef0-4439-9a2e-fe2012c911bf.jpg"
-        class="card-img-top imageCardSize" alt="...">
-        <div class="card-body">
-          <h4 class="card-title cinzaHard" >Nome Restaurante</h4>
-          <p class="card-text cinzaHardTwo"><i class="fa-solid fa-star corPrincipal"></i> &#160;&#160;&#160;4.5 • Categoria Tipo</p>
-          
-        </div>
-        <div class="card-footer cardBackground"><i class="fa-regular fa-clock"></i> &#160;&#160;&#160;Tempo médio • 7 minutos</div>
-      </div>
-      
-      <div class="card marginsCards inlineTrue mx-3"  style="width: 18rem;">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaLM9MWJghDrNExKdtPLDgYNlpstcUi0uCig&usqp=CAU" class="card-img-top imageCardSize" alt="...">
-        <div class="card-body">
-          <h4 class="card-title cinzaHard" >Nome Restaurante</h4>
-          <p class="card-text cinzaHardTwo"><i class="fa-solid fa-star corPrincipal"></i> &#160;&#160;&#160;4.5 • Categoria Tipo</p>
-          
-        </div>
-        <div class="card-footer cardBackground"><i class="fa-regular fa-clock"></i> &#160;&#160;&#160;Tempo médio • 7 minutos</div>
-      </div>
- 
+    </a>
+    {% endif %}
+    {% endfor  %} 
 
 
     <h2 class="titleFeature">OFERTAS  <i class="fa-solid fa-arrow-right mx-5 my-5 corPrincipal"></i> </h2>
     
-      
-    <div class="card marginsCards inlineTrue mx-3" style="width: 18rem;">
-      <img src="https://media-manager.noticiasaominuto.com/1920/naom_63777f3180bc6.jpg" class="card-img-top imageCardSize" alt="...">
+    {% for rest in restaurantes  %}
+    {% if rest.destaque == 'oferta' %}
+    <a href="{% url 'restaurant' rest.id %}">
+    <div class="card marginsCards inlineTrue mx-3 " style="width: 18rem;">
+      <img src="{% static rest.imagem.url %}" class="card-img-top imageCardSize" alt="...">
       <div class="card-body">
-        <h4 class="card-title cinzaHard" >Nome Restaurante</h4>
-        <p class="card-text cinzaHardTwo"><i class="fa-solid fa-star corPrincipal"></i> &#160;&#160;&#160;4.5 • Categoria Tipo</p>
+        <h4 class="card-title cinzaHard" >{{rest.nome}}</h4>
+        <p class="card-text cinzaHardTwo"><i class="fa-solid fa-star corPrincipal"></i> &#160;&#160;&#160;4.5 • {{rest.tipo}}</p>
         
       </div>
       <div class="card-footer cardBackground"><i class="fa-regular fa-clock"></i> &#160;&#160;&#160;Tempo médio • 7 minutos</div>
     </div>
-      
-      <div class="card  marginsCards inlineTrue mx-3" style="width: 18rem;" >
-        <img src="https://images.deliveryhero.io/image/fd-tr/LH/j3aj-hero.jpg?width=2500&height=625&quality=45" class="card-img-top imageCardSize" alt="...">
-        <div class="card-body">
-          <h4 class="card-title cinzaHard" >Nome Restaurante</h4>
-          <p class="card-text cinzaHardTwo"><i class="fa-solid fa-star corPrincipal"></i> &#160;&#160;&#160;4.5 • Categoria Tipo</p>
-          
-        </div>
-        <div class="card-footer cardBackground"><i class="fa-regular fa-clock"></i> &#160;&#160;&#160;Tempo médio • 7 minutos</div>
-      </div>
-
-      <div class="card marginsCards inlineTrue mx-3" style="width: 18rem;">
-        <img src="https://res.cloudinary.com/tf-lab/image/upload/restaurant/52438179-412a-4ea9-ac54-91eb881f1588/f5c22c1f-7ef0-4439-9a2e-fe2012c911bf.jpg"
-        class="card-img-top imageCardSize" alt="...">
-        <div class="card-body">
-          <h4 class="card-title cinzaHard" >Nome Restaurante</h4>
-          <p class="card-text cinzaHardTwo"><i class="fa-solid fa-star corPrincipal"></i> &#160;&#160;&#160;4.5 • Categoria Tipo</p>
-          
-        </div>
-        <div class="card-footer cardBackground"><i class="fa-regular fa-clock"></i> &#160;&#160;&#160;Tempo médio • 7 minutos</div>
-      </div>
-
-      <div class="card marginsCards inlineTrue mx-3"  style="width: 18rem;">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaLM9MWJghDrNExKdtPLDgYNlpstcUi0uCig&usqp=CAU" class="card-img-top imageCardSize" alt="...">
-        <div class="card-body">
-          <h4 class="card-title cinzaHard" >Nome Restaurante</h4>
-          <p class="card-text cinzaHardTwo"><i class="fa-solid fa-star corPrincipal"></i> &#160;&#160;&#160;4.5 • Categoria Tipo</p>
-          
-        </div>
-        <div class="card-footer cardBackground"><i class="fa-regular fa-clock"></i> &#160;&#160;&#160;Tempo médio • 7 minutos</div>
-      </div>
+    </a>
+    {% endif %}
+    {% endfor  %} 
  
 </div>
-   
+
 
 
 {% include 'footer.html' %}
 
 <script src="{% static 'js/uikit.js' %}"></script>
+
 </body>
 </html>

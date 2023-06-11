@@ -1,12 +1,11 @@
 import requests as r
 
 
-def getAllitems():
-    apiUrl = 'http://localhost:8080/api/v1/items/all'
+def getAllitems(restaurant):
+    apiUrl = str(restaurant.api)+'items/all'
+    print(apiUrl)
     all_items = r.get(apiUrl).json()
-
     return all_items
 
 
 
-    

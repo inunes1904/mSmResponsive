@@ -239,12 +239,47 @@ background-color: var(--color--primary);
     color: var(--color--primary);
   }
 
+  .row-image{
+	width: 100px;
+    height: 100px;
+    border-radius: 15px;
+}
+
   a{
     text-decoration: none;
   }
 
   .nav-pills .nav-item .active {
     border-bottom: 2px solid var(--color--primary);
+}
+
+
+.chg-quantity{
+	width: 12px;
+	cursor: pointer;
+	display: block;
+	margin-top: 5px;
+	transition:.1s;
+}
+
+.chg-quantity:hover{
+	opacity: .6;
+}
+
+.cart-row{
+	display: flex;
+    align-items: flex-stretch;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ececec;
+
+}
+.quantity{
+	display: inline-block;
+	font-weight: 700;
+	padding-right:10px;
+    padding-left: 25px;
+
 }
 
   /* medium devices Tablets */
@@ -263,6 +298,17 @@ margin-bottom: 20px;
 .titleFeatureCategoria{
 padding-left: 0;
 }
+.row-image{
+	width: 75px;
+    height: 75px;
+    border-radius: 5px;
+}
+.dontShow{
+    display: none;
+}
+
+
+
 }
   /* small devices mobile phones */
 @media screen and (max-width: 600px){
@@ -280,5 +326,15 @@ padding-left: 0;
 .titleFeatureCategoria{
     padding-left: 0;
 }
+.row-image{
+	width: 75px;
+    height: 75px;
+    border-radius: 5px;
+}
+
+.dontShow{
+    display: none;
+}
+
 }
   

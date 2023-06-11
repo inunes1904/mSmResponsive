@@ -25,7 +25,7 @@
 		
 			<div class="signup">
 				
-				<form name="form" method="post" url="login">
+				<form name="form" method="post" action="{% url 'login_or_register' %}">
 					{% csrf_token %}
 					<label style="color: #94395b;" for="chk" aria-hidden="true">Criar Conta</label>
 					<input type="text" name="username" placeholder="Nome de Utilizador" required="">
@@ -37,10 +37,10 @@
 			</div>
 
 			<div class="login">
-				<form name="form" method="post" url="login">
+				<form name="form" method="post" action="{% url 'login_or_register' %}>
 					{% csrf_token %}
 					<label for="chk" style="color: #94395b;" aria-hidden="true">Entrar</label>
-					<input type="text" name="username" placeholder="Username" required="">
+					<input type="text" name="username" placeholder="Utilizador" required="">
 					<input type="password" name="pswd" placeholder="Password" required="">
 					<button type="submit">Entrar</button>
 				</form>
