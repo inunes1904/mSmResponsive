@@ -8,4 +8,3 @@ def getAllitems(restaurant):
     return all_items
 
 
-

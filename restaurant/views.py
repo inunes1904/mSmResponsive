@@ -9,12 +9,24 @@ from user.models import Profile
 # Create your views here.
 
 def home(request, nmesa):
-    
+
+    try:
+        user = User.objects.get(pk=request.user.id)
+        
+        if user.groups.filter(name='admin').exists() or \
+                user.groups.filter(name='rest_admin').exists() or \
+                user.is_superuser:
+            result = True
+    except:
+        print('No user')
     restaurantes = Restaurante.objects.all()  
+    result = False
+
     request.session['mesa'] = nmesa
     context={
         'restaurantes' : restaurantes,
-        'mesa' : nmesa
+        'mesa' : nmesa,
+        'authorized': result
     }
 
     return render(request, 'index.html', context)
@@ -54,9 +66,9 @@ def restaurant(request, rest_id):
 def cart(request):
 
     nmesa = request.session['mesa']
-    
     all_items_in_cart = ""
-     
+    pedido = None
+
     if request.user.is_authenticated:
         cliente = Profile.objects.get(user=request.user.id)
         pedido, criado = Pedido.objects.get_or_create(cliente=cliente, finalizado=False)
@@ -67,9 +79,6 @@ def cart(request):
         'items' : all_items_in_cart,
         'mesa' : nmesa,
         'pedido' : pedido,
-        'numero_total' : pedido.get_numero_items,
-        'preco_total' : pedido.get_total
-        
     }
     
     return render(request, 'cart.html', context)

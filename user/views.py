@@ -20,7 +20,7 @@ def userlogin(request):
                 messages.error(request, "Nome de utilizador ou password incorretos")
             else:
                 messages.success(request, "Login realizado com sucesso")
-                return redirect('/')
+                return redirect('home', request.session['mesa'])
         else:
             print("REALIZAR REGISTO")
             if pwd == pwdconfirm:

@@ -32,12 +32,12 @@
 					<input type="email" name="email" placeholder="Email" required="">
 					<input type="password" name="pswd" placeholder="Password" required="">
 					<input type="password" name="pswd2" placeholder="Confirmar Password" required="">
-					<button>Registar</button>
+					<button type="submit">Registar</button>
 				</form>
 			</div>
 
 			<div class="login">
-				<form name="form" method="post" action="{% url 'login_or_register' %}>
+				<form name="form" method="post" action="{% url 'login_or_register' %}">
 					{% csrf_token %}
 					<label for="chk" style="color: #94395b;" aria-hidden="true">Entrar</label>
 					<input type="text" name="username" placeholder="Utilizador" required="">

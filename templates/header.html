@@ -34,11 +34,13 @@
           </div>
       
           <div class="col-lg-2 col-sm-12 text-center" >
-            {% if request.user != 'AnonymousUser' %}
-              <a href=""><i class="fa-solid fa-lock fa-2x corPrincipal my-4 mx-2"></i></a> 
+            {% if authorized %}
+              <a href="{% url 'admin:index'  %}"><i class="fa-solid fa-lock fa-2x corPrincipal my-4 mx-2"></i></a> 
             {% endif %}
-              <i class="fa-solid fa-user fa-2x corPrincipal my-4 mx-2 "></i>
-              <i class="fa-solid fa-cart-shopping fa-2x corPrincipal my-4 mx-2"></i>
+            {% if user %}
+              <a href="{% url 'login_or_register' %}"><i class="fa-solid fa-user fa-2x corPrincipal my-4 mx-2 "></i></a>
+            {% endif %}
+              <a href="{% url 'cart' %}"><i class="fa-solid fa-cart-shopping fa-2x corPrincipal my-4 mx-2"></i></a>
           </div>
 
 
