@@ -37,11 +37,14 @@
             {% if authorized %}
               <a href="{% url 'admin:index'  %}"><i class="fa-solid fa-lock fa-2x corPrincipal my-4 mx-2"></i></a> 
             {% endif %}
-            {% if request.user == 'AnonymousUser'  %}
+
+            {% if user == 'AnonymousUser'  %}
               <a href="{% url 'login_or_register' %}"><i class="fa-solid fa-user fa-2x corPrincipal my-4 mx-2 "></i></a>
-            {% endif %}
-            {% if user != 'AnonymousUser'  %}  
-              <i class="fa-solid fa-person-walking-arrow-right fa-2x my-4 corPrincipal" data-bs-toggle="modal" data-bs-target="#exampleModal2"></i>
+            
+            {% elif user != 'AnonymousUser'  %}  
+              <i class="fa-solid fa-right-from-bracket fa-2x my-4 corPrincipal" data-bs-toggle="modal" data-bs-target="#exampleModal2"></i>
+              
+              <a href="{% url 'profile'  %}"><i style="padding-left: 10px;" class="fa-solid fa-user-pen  fa-2x my-4 corPrincipal"></i></a>
             {% endif %}
               <a href="{% url 'cart' %}" ><i  class="fa-solid fa-cart-shopping fa-2x corPrincipal my-4 mx-2" ></i></a>
           </div>

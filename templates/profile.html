@@ -1,0 +1,33 @@
+
+{% include 'header.html' %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+ <!-- RESTAURANTS CATEGORIES -->
+<div class="container my-4 tryOut" style="align-items: center;">
+  <a href="{% url 'home' mesa %}"><button class="corPrincipal btnAdd" style="width:150px;">&#x2190; Voltar</button></a>
+  <h2 class="titleFeatureCategoria text-center" style="padding-top: 20px;">Perfil</h2>
+
+  <h5 class="text-center">Bem-vindo ao seu perfil {{profile.nome}}</h5>
+
+ <!-- Main Section -->
+    <main class="text-center">
+
+        <div class="" style="padding-top: 25px;">
+        <a  href="{% url 'edit_profile' %}"><button class="btnAdd" style="width:70px;" ><i class="im im-edit "></i> Edit</button></a>
+        <div style="padding-top:30px;">
+        <img  class="avatar avatar--xl dev__avatar" src="{%  static profile.profile_imagem.url %}" />
+        </div>
+        <h2 class="dev__name">{{profile.nome}}</h2>
+        
+        <p class="dev__location" style="font-size: 1.2rem;"><b>Vive em</b> {{profile.morada}}, <b>Portugal</b></p>
+        
+        <p class="dev__location" style="font-size: 1.2rem;"> <b>Número de contribuinte:</b> {{profile.contribuinte}}</p>
+        </div>
+    </main>
+  
+</div>
+{% include 'footer.html' %}
+
+</script>
+</body>
+</html>

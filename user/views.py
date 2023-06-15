@@ -3,6 +3,9 @@ from .utils import *
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
+from .models import Profile
+from .forms import ProfileForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def userlogin(request):
@@ -43,3 +46,34 @@ def logout_user(request):
     logout(request)
     messages.info(request, 'Utilizador saiu com sucesso!')
     return redirect('home', mesa )
+
+@login_required
+def edit_profile(request):
+    mesa = request.session['mesa']
+    profile = request.user.profile
+    form = ProfileForm(instance=profile)
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Utilizador atualizado com sucesso!')
+            return redirect('profile')
+    context={ 
+             'profile':profile,
+             'form':form,
+             'user': request.user,
+             'mesa':mesa
+             }
+    return render(request, 'edit_profile.html', context)
+
+
+@login_required
+def profile(request):
+    mesa = request.session['mesa']
+    profile = request.user.profile
+    context={ 
+             'profile':profile,
+             'user': request.user,
+             'mesa':mesa
+             }
+    return render(request, 'profile.html', context)

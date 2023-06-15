@@ -282,6 +282,8 @@ background-color: var(--color--primary);
 
 }
 
+
+
   /* medium devices Tablets */
 @media screen and (max-width: 1024px){
 
@@ -338,3 +340,4 @@ padding-left: 0;
 
 }
   
+

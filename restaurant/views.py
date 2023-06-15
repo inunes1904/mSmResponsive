@@ -30,12 +30,13 @@ def home(request, nmesa):
         'restaurantes' : restaurantes,
         'mesa' : nmesa,
         'authorized': result,
-        'user': user
+        'user': str(user)
     }
     
     return render(request, 'index.html', context)
 
 def restaurant(request, rest_id):
+    
     user = request.user
 
     nmesa = request.session['mesa']
@@ -63,7 +64,7 @@ def restaurant(request, rest_id):
         'mesa' : nmesa,
         'restapi' : restapi,
         'restaurante' : rest_to_check,
-        'user' : user
+        'user' : str(user)
     }
     
     return render(request, 'restaurant.html', context)
@@ -87,7 +88,7 @@ def cart(request):
         'items' : all_items_in_cart,
         'mesa' : nmesa,
         'pedido' : pedido,
-        'user' : user
+        'user' : str(user)
     }
     
     return render(request, 'cart.html', context)
