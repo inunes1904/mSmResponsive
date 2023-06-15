@@ -3,6 +3,8 @@
     --color-main-light: #ffffff;
     --color-success:green;
     --color-success-bg: rgb(211, 255, 228);
+    --color-info:rgb(68, 130, 171);
+    --color-info-bg: rgb(152, 210, 255);
     }
 
 .alert-size{
@@ -43,6 +45,13 @@
    
   }
   
+  .alert.alert--info,
+  .alert.alert--info > .alert__message {
+    background-color: var(--color-info-bg);
+    color: var(--color-info);
+   
+  }
+
   .alert > .alert__close {
     background: transparent;
     cursor: pointer;

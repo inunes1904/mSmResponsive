@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from .utils import *
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.contrib.auth import logout
 
 # Create your views here.
 def userlogin(request):
@@ -36,3 +37,9 @@ def userlogin(request):
                 messages.error(request, "Passwords digitadas não são iguais")
 
     return render(request, 'login.html', context)
+
+def logout_user(request):
+    mesa = request.session['mesa']
+    logout(request)
+    messages.info(request, 'Utilizador saiu com sucesso!')
+    return redirect('home', mesa )

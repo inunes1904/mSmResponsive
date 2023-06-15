@@ -37,32 +37,22 @@
             {% if authorized %}
               <a href="{% url 'admin:index'  %}"><i class="fa-solid fa-lock fa-2x corPrincipal my-4 mx-2"></i></a> 
             {% endif %}
-            {% if user %}
+            {% if request.user == 'AnonymousUser'  %}
               <a href="{% url 'login_or_register' %}"><i class="fa-solid fa-user fa-2x corPrincipal my-4 mx-2 "></i></a>
             {% endif %}
-              <a href="{% url 'cart' %}"><i class="fa-solid fa-cart-shopping fa-2x corPrincipal my-4 mx-2"></i></a>
+            {% if user != 'AnonymousUser'  %}  
+              <i class="fa-solid fa-person-walking-arrow-right fa-2x my-4 corPrincipal" data-bs-toggle="modal" data-bs-target="#exampleModal2"></i>
+            {% endif %}
+              <a href="{% url 'cart' %}" ><i  class="fa-solid fa-cart-shopping fa-2x corPrincipal my-4 mx-2" ></i></a>
           </div>
 
 
         </div>
     </section>
 
-    
-   <!-- MAIN SECTION -->
-    <main  style="justify-content: center; display: flex; ">
-    <!-- SEARCH BAR -->
-      
-        <div class="search "  >
-          <div class="icon" >
-            <button type="submit"></button>
-          </div>
-          <div class="input">
-            <input type="text" placeholder="Procurar.." id="mySearch">
-          </div>
-        </div>
- 
-  </main>
+    {% block content %}
 
+    {% endblock content %}
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -75,17 +65,40 @@
           Você esta sentado na mesa {{ mesa }}
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
         </div>
       </div>
     </div>
   </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Sair da Aplicação</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Tem a certeza que deseja sair ?</p>
+            <p>A mesa {{ mesa }} irá ficar livre.</p>
+          </div>
+          <div class="modal-footer">
+            <a href="{% url 'logout_user' %}"><button type="button" class="corPrincipal btnAdd" data-bs-dismiss="modal">Sair</button></a>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
   <script>
+
     const myModal = document.getElementById('myModal')
-    const myInput = document.getElementById('myInput')
-    
+    const myInput = document.getElementById('myInput') 
+
     myModal.addEventListener('shown.bs.modal', () => {
       myInput.focus()
     })
+
   </script>

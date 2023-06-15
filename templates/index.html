@@ -1,6 +1,9 @@
 
 {% include 'header.html' %}
 {% load static %}
+{% block content %}
+{% include 'search.html' %}
+{% endblock content %}
 
 {% if messages %}
 {% for message in messages %}

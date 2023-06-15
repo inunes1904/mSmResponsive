@@ -10,12 +10,15 @@ from user.models import Profile
 
 def home(request, nmesa):
 
+    user = request.user
+    print(user)
+
     try:
-        user = User.objects.get(pk=request.user.id)
+        user_obj = User.objects.get(pk=request.user.id)
         
-        if user.groups.filter(name='admin').exists() or \
-                user.groups.filter(name='rest_admin').exists() or \
-                user.is_superuser:
+        if user_obj.groups.filter(name='admin').exists() or \
+                user_obj.groups.filter(name='rest_admin').exists() or \
+                user_obj.is_superuser:
             result = True
     except:
         print('No user')
@@ -26,12 +29,14 @@ def home(request, nmesa):
     context={
         'restaurantes' : restaurantes,
         'mesa' : nmesa,
-        'authorized': result
+        'authorized': result,
+        'user': user
     }
-
+    
     return render(request, 'index.html', context)
 
 def restaurant(request, rest_id):
+    user = request.user
 
     nmesa = request.session['mesa']
     all_items = ""
@@ -58,12 +63,15 @@ def restaurant(request, rest_id):
         'mesa' : nmesa,
         'restapi' : restapi,
         'restaurante' : rest_to_check,
+        'user' : user
     }
     
     return render(request, 'restaurant.html', context)
 
 
 def cart(request):
+
+    user = request.user
 
     nmesa = request.session['mesa']
     all_items_in_cart = ""
@@ -79,6 +87,9 @@ def cart(request):
         'items' : all_items_in_cart,
         'mesa' : nmesa,
         'pedido' : pedido,
+        'user' : user
     }
     
     return render(request, 'cart.html', context)
+
+
