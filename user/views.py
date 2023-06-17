@@ -41,11 +41,14 @@ def userlogin(request):
 
     return render(request, 'login.html', context)
 
+
+@login_required
 def logout_user(request):
     mesa = request.session['mesa']
     logout(request)
     messages.info(request, 'Utilizador saiu com sucesso!')
     return redirect('home', mesa )
+
 
 @login_required
 def edit_profile(request):

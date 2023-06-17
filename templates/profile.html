@@ -5,6 +5,20 @@
  <!-- RESTAURANTS CATEGORIES -->
 <div class="container my-4 tryOut" style="align-items: center;">
   <a href="{% url 'home' mesa %}"><button class="corPrincipal btnAdd" style="width:150px;">&#x2190; Voltar</button></a>
+ 
+ 
+{% if messages %}
+{% for message in messages %}
+<div style="text-align: center;">
+</br>
+  <div class="alert alert--{{message.tags}} alert-size" >
+    <p class="alert__message alert-text-pos" >{{message}}</p>
+    <button class="alert__close alert-close-i">&Cross;</button>
+  </div>
+</div>
+  {% endfor %}
+  {%endif%}
+ 
   <h2 class="titleFeatureCategoria text-center" style="padding-top: 20px;">Perfil</h2>
 
   <h5 class="text-center">Bem-vindo ao seu perfil {{profile.nome}}</h5>
@@ -28,6 +42,7 @@
 </div>
 {% include 'footer.html' %}
 
-</script>
+
+<script src="{% static 'js/uikit.js' %}"></script>
 </body>
 </html>

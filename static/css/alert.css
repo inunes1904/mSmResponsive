@@ -12,6 +12,7 @@
     height:55px;
 }
 
+
 .alert {
     display: inline-flex;
     gap: 3rem;
@@ -71,10 +72,10 @@
 }
 
   .alert-close-i{
-	font-size: 1rem; 
-	position: absolute; 
-	transform: translateY(-20px)  
-	translateX(+290px);
+		font-size: 1rem; 
+    position: absolute; 
+    transform: translateY(-20px)  
+    translateX(+360px);
 }
 
 .alert-close-i:hover{
