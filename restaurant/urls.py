@@ -6,5 +6,7 @@ urlpatterns = [
     
     path('<int:nmesa>/', views.home, name='home'),
     path('restaurant/<int:rest_id>', views.restaurant, name='restaurant'),
-    path('cart/', views.cart, name='cart')
+    path('cart/', views.cart, name='cart'),
+    path('update_item/', views.update_item, name="update_item"),
+    path('checkout/', views.checkout, name="checkout"),
 ]

@@ -1,7 +1,8 @@
-from django.http import HttpResponse
+import json
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from .utils import getAllitems
-from .models import Restaurante, Item, Pedido
+from .models import Restaurante, Item, Pedido, ItemPedido
 from django.contrib.auth.models import User
 from user.models import Profile
 
@@ -94,3 +95,51 @@ def cart(request):
     return render(request, 'cart.html', context)
 
 
+
+def checkout(request):
+
+    user = request.user
+
+    nmesa = request.session['mesa']
+    all_items_in_cart = ""
+    pedido = None
+
+    if request.user.is_authenticated:
+        cliente = Profile.objects.get(user=request.user.id)
+        pedido, criado = Pedido.objects.get_or_create(cliente=cliente, finalizado=False)
+        all_items_in_cart = pedido.itempedido_set.all()
+
+
+    context = {
+        'items' : all_items_in_cart,
+        'mesa' : nmesa,
+        'pedido' : pedido,
+        'user' : str(user)
+    }
+    
+    return render(request, 'checkout.html', context)
+
+
+def update_item(request):
+    print("\n\nCHEGUEI\n\n")
+    data = json.loads(request.body)
+    print(data)
+    item_id = data['itemId']
+    action = data['action']
+    cliente = request.user.profile
+    item = Item.objects.get(id=item_id)
+    pedido, created = Pedido.objects.get_or_create(cliente=cliente, finalizado=False)
+
+    item_pedido, created = ItemPedido.objects.get_or_create(pedido=pedido, item=item)
+
+    # Se a acao for igual a add adiciona o item a order
+    if action == 'add':
+        item_pedido.quantidade = (item_pedido.quantidade + 1)
+    # Se a acao for igual a remove, remove o item a order
+    elif action == 'remove':
+        item_pedido.quantidade = (item_pedido.quantidade - 1)
+    item_pedido.save()
+    # caso o orderitem tenha quantidade negativa queremos removelo da order
+    if item_pedido.quantidade <= 0:
+        item_pedido.delete()
+    return JsonResponse('Item foi adicionado ou atualizado', safe=False)

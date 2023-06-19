@@ -65,13 +65,14 @@ class Pedido(models.Model):
     def end_pedido(self):
         if not self.finalizado and self.pedido_pago and self.pedido_entregue:
             self.finalizado = True
+            
         
         
     
 class ItemPedido(models.Model):
     item = models.ForeignKey(Item, null=True, blank=True, on_delete=models.SET_NULL)
     pedido = models.ForeignKey(Pedido, null=True, blank=True, on_delete=models.SET_NULL)
-    quantidade = models.IntegerField()
+    quantidade = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.id}"
