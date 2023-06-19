@@ -41,6 +41,8 @@ class Pedido(models.Model):
     data_conclusao = models.DateTimeField(null=True, blank=True)
     mesa = models.IntegerField()
     finalizado = models.BooleanField(default=False)
+    pedido_pago = models.BooleanField(default=False)
+    pedido_entregue = models.BooleanField(default=False)
     numero_transacao = models.CharField(max_length=100, null=True)
     restaurante = models.ManyToManyField(Restaurante, blank=True)
 
@@ -58,6 +60,13 @@ class Pedido(models.Model):
         numero_items = self.itempedido_set.all()
         total = sum([item.quantidade * item.item.preco for item in numero_items])
         return total
+    
+    @property
+    def end_pedido(self):
+        if not self.finalizado and self.pedido_pago and self.pedido_entregue:
+            self.finalizado = True
+        
+        
     
 class ItemPedido(models.Model):
     item = models.ForeignKey(Item, null=True, blank=True, on_delete=models.SET_NULL)
