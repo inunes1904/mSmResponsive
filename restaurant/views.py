@@ -1,3 +1,4 @@
+import datetime
 import json
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
@@ -81,7 +82,8 @@ def cart(request):
 
     if request.user.is_authenticated:
         cliente = Profile.objects.get(user=request.user.id)
-        pedido, criado = Pedido.objects.get_or_create(cliente=cliente, finalizado=False)
+        pedido, criado = Pedido.objects.get_or_create(cliente=cliente, finalizado=False, 
+                                                      pedido_pago=False, mesa=nmesa)
         all_items_in_cart = pedido.itempedido_set.all()
 
 
@@ -106,7 +108,8 @@ def checkout(request):
 
     if request.user.is_authenticated:
         cliente = Profile.objects.get(user=request.user.id)
-        pedido, criado = Pedido.objects.get_or_create(cliente=cliente, finalizado=False)
+        pedido, criado = Pedido.objects.get_or_create(cliente=cliente, finalizado=False,
+                                                      pedido_pago=False,)
         all_items_in_cart = pedido.itempedido_set.all()
 
 
@@ -114,14 +117,15 @@ def checkout(request):
         'items' : all_items_in_cart,
         'mesa' : nmesa,
         'pedido' : pedido,
-        'user' : str(user)
+        'user' : str(user),
+        'profile' : request.user.profile
     }
     
     return render(request, 'checkout.html', context)
 
 
 def update_item(request):
-    print("\n\nCHEGUEI\n\n")
+
     data = json.loads(request.body)
     print(data)
     item_id = data['itemId']
@@ -132,14 +136,37 @@ def update_item(request):
 
     item_pedido, created = ItemPedido.objects.get_or_create(pedido=pedido, item=item)
 
-    # Se a acao for igual a add adiciona o item a order
     if action == 'add':
         item_pedido.quantidade = (item_pedido.quantidade + 1)
-    # Se a acao for igual a remove, remove o item a order
+    
     elif action == 'remove':
         item_pedido.quantidade = (item_pedido.quantidade - 1)
     item_pedido.save()
-    # caso o orderitem tenha quantidade negativa queremos removelo da order
+   
     if item_pedido.quantidade <= 0:
         item_pedido.delete()
     return JsonResponse('Item foi adicionado ou atualizado', safe=False)
+
+
+def process_order(request):
+    # cria o id da transação
+    numero_transacao = datetime.datetime.now().timestamp()
+    data = json.loads(request.body)
+
+    if request.user.is_authenticated:
+        cliente = request.user.profile
+        pedido, created = Pedido.objects.get_or_create(cliente=cliente, 
+                                                       finalizado=False, pedido_pago=False)
+
+    total = float(data['form']['total'])
+    pedido.numero_transacao = numero_transacao
+    
+  
+    if total == float(pedido.get_total):
+        pedido.pedido_pago = True
+        # TODO enviar emails
+        # sendEmail(request, pedido)
+   
+    pedido.save()
+    
+    return JsonResponse('Payment submitted.', safe=False)

@@ -43,7 +43,7 @@ class Pedido(models.Model):
     finalizado = models.BooleanField(default=False)
     pedido_pago = models.BooleanField(default=False)
     pedido_entregue = models.BooleanField(default=False)
-    numero_transacao = models.CharField(max_length=100, null=True)
+    numero_transacao = models.CharField(max_length=100, null=True, default=0000000)
     restaurante = models.ManyToManyField(Restaurante, blank=True)
 
     def __str__(self):
