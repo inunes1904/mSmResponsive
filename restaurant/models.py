@@ -24,6 +24,12 @@ class Restaurante(models.Model):
     def __str__(self):
         return f"{self.nome}"
     
+    @property
+    def calculate_tempo_medio(self):
+        all_items = Item.objects.filter(restaurante=self)
+        total = sum([item.tempo for item in all_items])
+        self.tempo_medio = int(total/len(all_items))
+    
 class Item(models.Model):
     nome = models.CharField(max_length=50)
     imagem = models.ImageField(null=True, blank=True, default="default.jpg")
@@ -36,7 +42,8 @@ class Item(models.Model):
         return f"{self.nome}"
     
 class Pedido(models.Model):
-    cliente = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.SET_NULL)
+    cliente = models.ForeignKey(Profile, null=True, blank=True,related_name='cliente', on_delete=models.SET_NULL)
+    entregador = models.ForeignKey(Profile, null=True, blank=True, related_name='entregador', on_delete=models.SET_NULL)
     data_inicio = models.DateTimeField(auto_now_add=True)
     data_conclusao = models.DateTimeField(null=True, blank=True)
     mesa = models.IntegerField()
@@ -81,3 +88,6 @@ class ItemPedido(models.Model):
     def get_sub_total(self):
         total = self.item.preco * self.quantidade
         return total
+    
+
+

@@ -6,5 +6,3 @@ def getAllitems(restaurant):
     print(apiUrl)
     all_items = r.get(apiUrl).json()
     return all_items
-
-

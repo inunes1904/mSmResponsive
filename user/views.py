@@ -23,6 +23,9 @@ def userlogin(request):
             if not result:
                 messages.error(request, "Nome de utilizador ou password incorretos")
             else:
+                print(f'\n\n{request.user.groups.filter(name="delivery").exists()}')
+                if request.user.groups.filter(name="delivery").exists():
+                    return redirect('home_delivery_crew')
                 messages.success(request, "Login realizado com sucesso")
                 return redirect('home', request.session['mesa'])
         else:
@@ -44,6 +47,9 @@ def userlogin(request):
 
 @login_required
 def logout_user(request):
+    if request.user.groups.filter(name="delivery").exists():
+        logout(request)
+        return redirect('login_or_register')
     mesa = request.session['mesa']
     logout(request)
     messages.info(request, 'Utilizador saiu com sucesso!')

@@ -77,10 +77,6 @@
 </div>
 {% include 'footer.html' %}
 
-<script>
-
-</script>
-
 <script src="https://www.paypal.com/sdk/js?client-id=Aa4yMT1Z2fp8P28H0Joup5-ltWJA_40qYHTEg3oMyJFHydb4COH39h7zw4V4hIG3uoTDh4I-v4PzpGzL&currency=EUR&disable-funding=credit"></script>
 
 <script>
@@ -156,7 +152,7 @@
 			customAlert.alert('This is a custom alert with heading.','Heads Up!')
 			document.getElementById("pagamentoSucesso").click();
   
-            setTimeout(function() { window.location.href = "{% url 'home' mesa %}" }, 3000);
+            setTimeout(function() { window.location.href = "{% url 'delivery' %}" }, 3000);
 
 		})
         document.getElementById("pagamentoSemSucesso").click();

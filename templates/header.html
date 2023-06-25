@@ -49,9 +49,11 @@
           <div class="col-sm-4 col-lg-10">
               <img src="{% static 'images/mall_safe_meal.png' %}" alt="" srcset=""> 
               <ul class="entregar">
-                <li href="" class="cinzaMain" >Entregar Agora</li>
-                <li href="" >Localização da Mesa <i class="fa-solid fa-chevron-down corPrincipal" data-bs-toggle="modal" data-bs-target="#exampleModal"></i></li> 
-            </ul>
+                {% if request.user.profile.role != 'delivery'  %}
+                  <li href="" class="cinzaMain" >Entregar Agora</li>
+                  <li href="" >Localização da Mesa <i class="fa-solid fa-chevron-down corPrincipal" data-bs-toggle="modal" data-bs-target="#exampleModal"></i></li> 
+                {% endif %}
+              </ul>
           </div>
       
           <div class="col-lg-2 col-sm-12 text-center" >
@@ -64,10 +66,13 @@
             
             {% elif user != 'AnonymousUser'  %}  
               <i class="fa-solid fa-right-from-bracket fa-2x my-4 corPrincipal" data-bs-toggle="modal" data-bs-target="#exampleModal2"></i>
-              
-              <a href="{% url 'profile'  %}"><i style="padding-left: 10px;" class="fa-solid fa-user-pen  fa-2x my-4 corPrincipal"></i></a>
+              {% if request.user.profile.role != 'delivery'  %}
+                <a href="{% url 'profile'  %}"><i style="padding-left: 10px;" class="fa-solid fa-user-pen  fa-2x my-4 corPrincipal"></i></a>
+              {% endif %}
             {% endif %}
+            {% if request.user.profile.role != 'delivery'  %}
               <a href="{% url 'cart' %}" ><i  class="fa-solid fa-cart-shopping fa-2x corPrincipal my-4 mx-2" ></i></a>
+            {% endif %}
           </div>
 
 

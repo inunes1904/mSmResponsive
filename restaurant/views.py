@@ -13,8 +13,10 @@ from user.models import Profile
 def home(request, nmesa):
 
     user = request.user
-    print(user)
-
+    print(request.user.groups.filter(name="delivery").exists())
+    if request.user.groups.filter(name="delivery").exists():
+        redirect('home_delivery_crew')
+        
     try:
         user_obj = User.objects.get(pk=request.user.id)
         
@@ -124,6 +126,36 @@ def checkout(request):
     return render(request, 'checkout.html', context)
 
 
+def delivery(request):
+
+    user = request.user
+    nmesa = request.session['mesa']
+    all_items_in_cart = ""
+    pedido = None
+
+    if request.user.is_authenticated:
+        cliente = Profile.objects.get(user=request.user.id)
+        try:
+            pedido = Pedido.objects.get(cliente=cliente, finalizado=False,
+                                        pedido_pago=True, pedido_entregue=False)
+        except:
+            pedido = Pedido.objects.get(cliente=cliente, finalizado=False,
+                                        pedido_pago=True, pedido_entregue=True)
+
+        all_items_in_cart = pedido.itempedido_set.all()
+
+
+    context = {
+        'items' : all_items_in_cart,
+        'mesa' : nmesa,
+        'pedido' : pedido,
+        'user' : str(user),
+        'profile' : request.user.profile
+    }
+    
+    return render(request, 'waiting_delivery.html', context)
+
+
 def update_item(request):
 
     data = json.loads(request.body)
@@ -132,10 +164,12 @@ def update_item(request):
     action = data['action']
     cliente = request.user.profile
     item = Item.objects.get(id=item_id)
-    pedido, created = Pedido.objects.get_or_create(cliente=cliente, finalizado=False)
-
+    
+    pedido, created = Pedido.objects.get_or_create(cliente=cliente, finalizado=False,
+                                                    mesa=request.session['mesa'], pedido_pago=False)
+    
     item_pedido, created = ItemPedido.objects.get_or_create(pedido=pedido, item=item)
-
+    
     if action == 'add':
         item_pedido.quantidade = (item_pedido.quantidade + 1)
     
@@ -170,3 +204,4 @@ def process_order(request):
     pedido.save()
     
     return JsonResponse('Payment submitted.', safe=False)
+
