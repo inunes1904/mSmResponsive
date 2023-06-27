@@ -215,7 +215,17 @@
     height: 5rem;
     width: 5rem;
   }
+  .avatar--xs {
+    height: 3.5rem;
+    width: 3.5rem;
+    
+  }
 
+  .avatar--xxs {
+    height: 2rem;
+    width: 2rem;
+    
+  }
   /*=======================
   Profile
 ========================*/

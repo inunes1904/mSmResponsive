@@ -2,11 +2,11 @@
 {% include 'header.html' %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/form.css' %}">
-<link rel="stylesheet" href="{% static 'css/alertPrompt.css' %}">
+
  <!-- RESTAURANTS CATEGORIES -->
 <div class="container my-4 tryOut" style="align-items: center;">
  
-  <h2 class="titleFeatureCategoria text-center" style="padding-top: 20px;">Acompanhar Entrega</h2>
+  <h2 class="titleFeatureCategoria text-center" style="padding-top: 20px;">Listagem Entregas</h2>
     <br>
     <br>
   <div class="row">
@@ -16,90 +16,151 @@
                 <div>
                     <h4 style="padding-top: 12px; color:#94395b;" >Pedidos por Entregar</h4>
                     <hr>
-             {% if pedido %}
-                {% if pedido.pedido_entregue%}
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div style="padding-top: 20px;">
-                            <h5 style="color:#94395b;">Entregador:</h5>
-                            <img style="height:100px;  padding-top: 20px;" src="{%  static pedido.entregador.profile_imagem.url %}" alt="" srcset="">
-                            <h5 style="padding-top: 20px;">{{ pedido.entregador }}</h5>
-                        </div>
+             {% if pedidos %}
+                {% for pedido in pedidos %}
+                
+                    <div class="w-100">
+                        <table class="col-lg-12">
+                            <tr>
+                              <th style="width:20%;">Cliente</th>
+                              <th style="width:30%;">Nome</th>
+                              <th>Nº Trasação</th>
+                              <th>Mesa</th>
+                            </tr>
+                            <tr>
+                              <td><img class="avatar avatar--xs" src="{%  static pedido.cliente.profile_imagem.url %}" alt=""></td>
+                              <td >{{pedido.cliente.nome}}</td>
+                              <td >{{pedido.numero_transacao}}</td>
+                              <td style="padding-left: 15px;">{{pedido.mesa}}</td>
+                            </tr>
+                          </table>
                     </div>
-                    <div class="col-lg-8">
-                        <div style="padding-top: 20px;">
-                            <h5 style="color:#94395b;">Estado do pedido:</h5>
-                            <h5 style="padding-top: 20px;">O seu pedido encontra-se entregue espero que se encontre tudo do seu agrado a sua satisfação é a nossa.</h5>
-                            <h6>Obrigado pela confiança {{profile.nome}}, esperamos voltar a vê-lo brevemente.</h6>
-                        </div>
-                    </div>
-                </div>
-                {% elif pedido.entregador != Null %}
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div style="padding-top: 20px;">
-                            <h5 style="color:#94395b;">Entregador:</h5>
-                            <img style="height:100px;  padding-top: 20px;" src="{%  static pedido.entregador.profile_imagem.url %}" alt="" srcset="">
-                            <h5 style="padding-top: 20px;">{{ pedido.entregador }}</h5>
-                        </div>
-                    </div>
-                    <div class="col-lg-8">
-                        <div style="padding-top: 20px;">
-                            <h5 style="color:#94395b;">Estado do pedido:</h5>
-                            <h5 style="padding-top: 20px;">O nosso colaborador encontra-se a entregar o seu pedido porfavor não saia da sua localização obrigado.</h5>
-                            <h6 style="padding-top: 20px;">Estamos a contar que se encontre na mesa {{mesa}}</h6>
-                        </div>
-                    </div>
-                </div>
-                {% else %}
-                <div>
-                    <h5>Aguarde o seu pedido está a ser concebido</h5>
-                    <img src="{% static 'images/waiting.gif'  %}" alt="" srcset="">
-                </div>
-                {% endif %}
-                {% else %}
-                <h4>Sem pedido</h4>
+                
+                {% endfor %}
+            {% else %}
+            <h6>Infelizmente estamos sem pedidos para recolher e entregar</h6>
             {% endif %}
             </div>         
         </div>       
-        <div class="box-element hidden" id="payment-info">
-            <h4 class="corPrincipal" style="padding-top: 13px;">Escolher Método</h4>
-            <hr>
         
-            <div id="paypal-button-container" >
-             
-            </div>
-        </div>
+        <!--  PEDIDOS ENTREGUES -->
+        
+        <div class="content-box" style="padding-top: 40px;" id="form-wrapper">
+            
+            <div>
+              
+              <div class="w-100">
+                        <img style="display: inline-block;" class="avatar avatar--sm" src="{%  static profile.profile_imagem.url %}" alt="">
+                       <h4 style="padding-left: 12px;display: inline-block; color:#94395b;" > As minhas entregas</h4>
+                   
+              </div>
+                <hr>
+                {% if pedidos_entregues %}
+                {% for pedido in pedidos_entregues %}
+                
+                    <div class="w-100">
+                        <table class="col-lg-12">
+                          <tr>
+                            <th style="width:20%;">Cliente</th>
+                            <th style="width:30%;">Nome</th>
+                            <th>Nº Trasação</th>
+                            <th>Mesa</th>
+                          </tr>
+                          <tr>
+                            <td><img class="avatar avatar--xs" src="{%  static pedido.cliente.profile_imagem.url %}" alt=""></td>
+                            <td >{{pedido.cliente.nome}}</td>
+                            <td >{{pedido.numero_transacao}}</td>
+                            <td style="padding-left: 15px;">{{pedido.mesa}}</td>
+                          </tr>
+                          </table>
+                    </div>
+                
+                {% endfor %}
+            {% else %}
+            <h6>Infelizmente não fez ainda a sua primeira entrega</h6>
+            {% endif %}
 
+            </div>         
     </div>
-
+    </div>
     <div class="col-lg-6">
         <div class="box-element">
             <h4 style="padding-top: 12px; color:#94395b;" >Ação a realizar</h4>
-
             <hr>
+            <div class="w-100">
+                <table class="col-lg-12">
+                    <tr>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                    {% if pedidos %}
+                    {% for pedido in pedidos %}
+                    <tr>
+                        {% if pedido.entregador is None %}
+                        <td style="padding-top: 25px;"> <a  style="width:250px;" class="btn btnAdd delivery"  data-item={{pedido.id}} data-action="recolher" >Recolher Pedido</a></td>
+                        {% elif pedido.entregador == profile %}
+                        <td style="padding-top: 25px;"> <a  style="width:250px;" class="btn btnAdd delivery" data-item={{pedido.id}} data-action="entregar" >Efetuar Entrega Pedido</a></td>
+                        <td style="padding-top: 25px;"><img class="avatar avatar--xxs" src="{%  static profile.profile_imagem.url %}" alt=""></td>
+                        <td style="padding-top: 25px;">você é o entregador deste pedido</td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                    {% endif %}
+                  </table>
+            </div>
            
-            <br>
-            {% if items %}
-            {% for item in items %}
-                <div class="cart-row">
-                    <div style="flex:1"><img class="row-image-checkout" src="{% static item.item.imagem.url %}"></div>
-                    <div style="flex:1"><p>{{ item.item.nome }}</p></div>
-                    <div style="flex:1"><p>{{ item.item.preco }}</p></div>
-                    <div style="flex:1"><p>x{{ item.quantidade }}</p></div>
-                    <div style="flex:1"><p>{{ item.item.restaurante }}</p></div>
-                </div>
-                {% endfor %}
-                <h5>Items: {{ pedido.get_numero_items }}</h5>
-                <h5>Total: {{ pedido.get_total|floatformat:2 }}</h5>
-            {% else %}
-            <h4>Sem items</h4>
-            {% endif %}
         </div>
     </div>
 </div>
  
 </div>
 {% include 'footer.html' %}
+
+
+<script>
+
+  var updateButtons = document.getElementsByClassName('delivery')
+
+  for (var i=0; i < updateButtons.length; i++){
+      updateButtons[i].addEventListener('click', function(){
+      // aqui trazemos o datasource que no nosso caso e o button data-product
+      var action = this.dataset.action
+      var id_pedido = this.dataset.item
+      console.log('action', action , id_pedido)
+      update_delivery(id_pedido,  action) 
+  })
+  }
+
+  function update_delivery(id_pedido, action){
+      
+      var url = '/delivery-crew/make_delivery/'
+      // para enviar as novas informaçoes para o carrinho vamos 
+      // usar um fetch
+      fetch(url, {
+          method: 'POST',
+          headers:{
+              'Content-Type':'application/json',
+              'X-CSRFToken':csrftoken,
+          },
+          // como nao podemos enviar apenas os dados para o backend 
+          // utilizamos o json Stringify no corpo 
+          body: JSON.stringify({
+            'id_pedido':id_pedido, 
+            'action':action
+          })
+      })
+      // reposta do backend
+      .then((response) => {
+          return response.json();
+      })
+      .then((data) => {
+          console.log('Data:', data)
+          location.reload()
+      })
+  }
+
+</script>
+
 </body>
 </html>

@@ -15,8 +15,7 @@ def home(request, nmesa):
     user = request.user
     print(request.user.groups.filter(name="delivery").exists())
     if request.user.groups.filter(name="delivery").exists():
-        redirect('home_delivery_crew')
-        
+        redirect('home_delivery_crew') 
     try:
         user_obj = User.objects.get(pk=request.user.id)
         

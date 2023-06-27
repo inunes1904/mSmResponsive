@@ -110,7 +110,9 @@
           </div>
           <div class="modal-body">
             <p>Tem a certeza que deseja sair ?</p>
+            {% if mesa != 0 %}
             <p>A mesa {{ mesa }} irá ficar livre.</p>
+            {% endif %}
           </div>
           <div class="modal-footer">
             <a href="{% url 'logout_user' %}"><button type="button" class="corPrincipal btnAdd" data-bs-dismiss="modal">Sair</button></a>
