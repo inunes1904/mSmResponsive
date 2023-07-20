@@ -4,34 +4,49 @@
  <!-- RESTAURANTS CATEGORIES -->
 <div class="container my-4 tryOut" style="align-items: center;">
   <a href="{% url 'home' mesa %}"><button class="corPrincipal btnAdd">voltar</button></a>
-  <h2 class="titleFeatureCategoria text-center" style="padding-top: 20px;">{{restaurante.nome}}</h2>
-  
+  <h2 class="titleFeatureCategoria text-center" style="padding-top: 20px;">{{restaurante.nome}}</a></h2>
 
 <div class="text-center my-5">
-  <ul class="nav nav-pills d-inline-flex justify-content-center  border-bottom mb-5 ">
-    <li class="nav-item "><a class="d-flex align-items-center text-start mx-3 ms-0 pb-3" data-bs-toggle="pill" href="#tab-1">
-      <i class="fa fa-coffee fa-3x corPrincipal"></i>
+  <ul class="nav nav-pills d-inline-flex justify-content-center  border-bottom mb-5 ">    
+<form action="{% url 'restaurant' restaurante.id %}" id="form-id" method="GET"> 
+    <li class="nav-item " onclick="document.getElementById('form-id').submit();">
+      <a class="d-flex align-items-center text-start mx-3 ms-0 pb-3"  
+         value="bebida" data-bs-toggle="pill" href="#tab-1" >
+         <input class="hidden" type="text" id="filter" name="filter" value="bebida">
+      <i class="fa fa-coffee fa-3x corPrincipal" ></i>
+
       <div class="ps-3"><small class="text-body">Popular</small>
         <h6 class="mt-n1 mb-0 corPrincipal">Bebidas</h6>
       </div>
       </a>
     </li>
-    <li class="nav-item"><a class="d-flex align-items-center text-start mx-3 pb-3" data-bs-toggle="pill" href="#tab-2">
+  </form>
+  <form action="{% url 'restaurant' restaurante.id %}" id="form-id2" method="GET"> 
+    <li class="nav-item" onclick="document.getElementById('form-id2').submit();">
+      <a class="d-flex align-items-center text-start mx-3 pb-3" data-bs-toggle="pill" href="#tab-2">
       <i class="fa fa-hamburger fa-3x  corPrincipal"></i>
       <div class="ps-3"><small class="text-body">Especial</small>
         <h6 class="mt-n1 mb-0 corPrincipal">Comida</h6>
       </div>
       </a>
+      <input class="hidden" type="text" id="filter" name="filter" value="comida">
     </li>
-    <li class="nav-item"><a class="d-flex align-items-center text-start mx-3 me-0 pb-3 active" data-bs-toggle="pill" href="#tab-3">
-      <i class="fa fa-utensils fa-3x corPrincipal"></i>
+  </form>
+  <form action="{% url 'restaurant' restaurante.id %}" id="form-id3" method="GET"> 
+    <li class="nav-item" onclick="document.getElementById('form-id3').submit();">
+      <a class="d-flex align-items-center text-start mx-3 me-0 pb-3 active" data-bs-toggle="pill" href="#tab-3">
+      <i class="fa fa-utensils fa-3x corPrincipal" ></i>
       <div class="ps-3"><small class="text-body">Lovely</small>
         <h6 class="mt-n1 mb-0 corPrincipal">Deserts</h6>
+        <input class="hidden" type="text" id="filter" name="filter" value="desert">
       </div>
       </a>
     </li>
+  </form>
   </ul>
+
 </div>
+
 
   <div id="tab-1 " class="tab-pane fade show p-0 active my-5">
     <div class="row g-4">
@@ -65,5 +80,16 @@
 
 {% include 'footer.html' %}
 <script src="{% static 'js/carrinho.js' %}"></script>
+<script>
+
+  addEventListener("submit", (event) => {
+    console.log("AHAHAHHAHAHAHAHAH")
+  });
+
+
+</script>
 </body>
+
+
+
 </html>

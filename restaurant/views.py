@@ -31,12 +31,15 @@ def home(request, nmesa):
 
     if request.GET.get('mySearch'):
         search_query = request.GET.get('mySearch')   
-        restaurantes = Restaurante.objects.distinct().filter(Q(nome__icontains=search_query) |
-                                                    Q(tipo__icontains=search_query) |
-                                                    Q(descricao__icontains=search_query) or
-                                                    Q(rating__gte=search_query)
-                                                    )
-
+        if not search_query.isdigit():
+            restaurantes = Restaurante.objects.distinct().filter(Q(nome__icontains=search_query) |
+                                                        Q(tipo__icontains=search_query) |
+                                                        Q(descricao__icontains=search_query) 
+                                                        )
+        else:
+            restaurantes = Restaurante.objects.distinct().filter(
+                                                        Q(rating__gte=search_query)
+                                                        )
     request.session['mesa'] = nmesa
     context={
         'restaurantes' : restaurantes,
@@ -59,8 +62,13 @@ def restaurant(request, rest_id):
     restapi = False
     
     if rest_to_check.api is None:
-        try:   
+        try:
             all_items = Item.objects.filter(restaurante=rest_to_check)
+            if request.GET.get('filter'):
+                search_query = request.GET.get('filter')   
+                print(search_query)
+                if not search_query.isdigit():
+                    all_items = Item.objects.distinct().filter(Q(item_tipo=search_query) )    
         except Exception as e:
             print(e)
             print("No items")
