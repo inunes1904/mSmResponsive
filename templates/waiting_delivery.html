@@ -9,6 +9,8 @@
   <h2 class="titleFeatureCategoria text-center" style="padding-top: 20px;">Acompanhar Entrega</h2>
     <br>
     <br>
+{% if pedidos %}
+{% for pedido in pedidos %}
   <div class="row">
     <div class="col-lg-6">
         <div class="content-box" id="form-wrapper">
@@ -16,7 +18,7 @@
                 <div>
                     <h4 style="padding-top: 12px; color:#94395b;" >Informação da Entrega <a href="{% url 'delivery' %}" class="corPrincipal"><i style="width:52%; text-align: right;" class="fa-solid fa-rotate-right"></i></a></h4>
                     <hr>
-             {% if pedido %}
+             
                 {% if pedido.pedido_entregue%}
                 <div class="row">
                     <div class="col-lg-4">
@@ -54,12 +56,11 @@
                 {% else %}
                 <div>
                     <h5>Aguarde o seu pedido está a ser concebido</h5>
-                    <img src="{% static 'images/waiting.gif'  %}" alt="" srcset="">
+                    <img style="padding-left: 30px; height: 200px;" src="{% static 'images/waiting.gif'  %}" alt="" srcset="">
                 </div>
                 {% endif %}
-                {% else %}
-                <h4>Sem pedido</h4>
-            {% endif %}
+                
+            
             </div>         
         </div>       
         <div class="box-element hidden" id="payment-info">
@@ -80,8 +81,8 @@
             <hr>
            
             <br>
-            {% if items %}
-            {% for item in items %}
+            {% if pedido.itempedido_set.all  %}
+            {% for item in pedido.itempedido_set.all %}
                 <div class="cart-row">
                     <div style="flex:1"><img class="row-image-checkout" src="{% static item.item.imagem.url %}"></div>
                     <div style="flex:1"><p>{{ item.item.nome }}</p></div>
@@ -90,6 +91,7 @@
                     <div style="flex:1"><p>{{ item.item.restaurante }}</p></div>
                 </div>
                 {% endfor %}
+                <h5>Número Pedido: {{ pedido.numero_transacao }}</h5>
                 <h5>Items: {{ pedido.get_numero_items }}</h5>
                 <h5>Total: {{ pedido.get_total|floatformat:2 }}</h5>
             {% else %}
@@ -98,7 +100,13 @@
         </div>
     </div>
 </div>
- 
+ {% endfor %}
+ {% else %}
+ <div style="width:100%;" class="text-center">
+ <a href="{% url 'home' mesa %}"><button class="corPrincipal btnAdd " style="width:225px;">&#x2190; Voltar</button></a>
+</div>
+ <h4 class="text-center" style="padding: 50px 0px 245px 0px;">Não possui pedidos por entregar.</h4>
+ {% endif %}
 </div>
 {% include 'footer.html' %}
 </body>

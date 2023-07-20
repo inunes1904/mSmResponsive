@@ -147,24 +147,24 @@ def delivery(request):
     user = request.user
     nmesa = request.session['mesa']
     all_items_in_cart = ""
-    pedido = None
+    pedidos = None
 
     if request.user.is_authenticated:
-        cliente = Profile.objects.get(user=request.user.id)
+        cliente = Profile.objects.get(user=user)
         try:
-            pedido = Pedido.objects.get(cliente=cliente, finalizado=False,
+            pedidos = Pedido.objects.filter(cliente=cliente, finalizado=False,
                                         pedido_pago=True, pedido_entregue=False)
         except:
-            pedido = Pedido.objects.get(cliente=cliente, finalizado=False,
+            pedidos = Pedido.objects.filter(cliente=cliente, finalizado=False,
                                         pedido_pago=True, pedido_entregue=True)
 
-        all_items_in_cart = pedido.itempedido_set.all()
-
+    print(len(pedidos))
+    for ped in pedidos:
+        print(ped)
 
     context = {
-        'items' : all_items_in_cart,
         'mesa' : nmesa,
-        'pedido' : pedido,
+        'pedidos' : pedidos,
         'user' : str(user),
         'profile' : request.user.profile
     }
