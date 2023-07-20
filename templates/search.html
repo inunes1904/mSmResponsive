@@ -1,14 +1,16 @@
   <!-- MAIN SECTION -->
   <main  style="justify-content: center; display: flex; ">
     <!-- SEARCH BAR -->
-      
+      <form action="{% url 'home' mesa %}" method="GET">
         <div class="search "  >
           <div class="icon" >
-            <button type="submit"></button>
+            <button type="submit" ></button>
           </div>
           <div class="input">
-            <input type="text" placeholder="Procurar.." id="mySearch">
+            <input type="text" placeholder="Procurar.." id="mySearch" name="mySearch">
           </div>
         </div>
- 
+      </form>
   </main>
+
+  

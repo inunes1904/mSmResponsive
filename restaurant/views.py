@@ -6,6 +6,7 @@ from .utils import getAllitems
 from .models import Restaurante, Item, Pedido, ItemPedido
 from django.contrib.auth.models import User
 from user.models import Profile
+from django.db.models import Q
 
 
 # Create your views here.
@@ -27,6 +28,14 @@ def home(request, nmesa):
         print('No user')
     restaurantes = Restaurante.objects.all()  
     result = False
+
+    if request.GET.get('mySearch'):
+        search_query = request.GET.get('mySearch')   
+        restaurantes = Restaurante.objects.distinct().filter(Q(nome__icontains=search_query) |
+                                                    Q(tipo__icontains=search_query) |
+                                                    Q(descricao__icontains=search_query) or
+                                                    Q(rating__gte=search_query)
+                                                    )
 
     request.session['mesa'] = nmesa
     context={
