@@ -68,7 +68,8 @@ def restaurant(request, rest_id):
                 search_query = request.GET.get('filter')   
                 print(search_query)
                 if not search_query.isdigit():
-                    all_items = Item.objects.distinct().filter(Q(item_tipo=search_query) )    
+                    all_items = Item.objects.distinct().filter(Q(item_tipo=search_query) 
+                                                               & Q(restaurante=rest_to_check) )    
         except Exception as e:
             print(e)
             print("No items")
