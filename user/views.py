@@ -7,6 +7,7 @@ from .models import Profile
 from .forms import ProfileForm
 from django.contrib.auth.decorators import login_required
 
+
 # Create your views here.
 def userlogin(request):
     context={}
@@ -35,12 +36,11 @@ def userlogin(request):
                     new_user = User.objects.create_user(username=user, email=email,
                                                         password=pwd)
                     new_user.save()
-                    #new_profile = Profile.objects.create_profile(user=new_user )            
-                    #new_profile.save()
+                    
+
                     messages.success(request, "Utilizador criado com sucesso")
                 except:
-                    messages.error(request, "Email ou Utilizador já existem")
-                
+                    messages.error(request, "Email ou Utilizador já existem")       
             else:
                 messages.error(request, "Passwords digitadas não são iguais")
 

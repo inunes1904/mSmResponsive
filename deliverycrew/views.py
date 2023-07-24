@@ -33,11 +33,9 @@ def make_delivery(request):
     action = data['action']
     id_pedido = data['id_pedido']
     pedido = Pedido.objects.get(pk=id_pedido)
-    print('pedido id: ', pedido.id)
-    print('pedido action: ', action)
-    print('pedido entregador: ', pedido.entregador)
+   
     if action == 'recolher':
-        print(request.user.profile.nome)
+        
         pedido.entregador = request.user.profile
     elif action == 'entregar':
         pedido.pedido_entregue = True
