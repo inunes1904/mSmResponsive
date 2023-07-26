@@ -22,7 +22,7 @@ def home_delivery_crew(request):
 
     for pedido in meus_pedidos:
         if pedido.pedido_pago == True and pedido.pedido_entregue == True:
-            pedido.finalizado = True
+            pedido.end_pedido
             pedido.save()
 
     return render(request, 'delivery_crew.html', context)

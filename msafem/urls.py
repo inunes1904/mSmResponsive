@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include('user.urls')),
     path('delivery-crew/', include('deliverycrew.urls')),
+    path('invoice/', include('invoice.urls')),
 
     # RESET da Password Class Based Views
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name="reset_password.html"), 

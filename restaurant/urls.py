@@ -1,5 +1,4 @@
 from restaurant import views
-from django.contrib import admin
 from django.urls import  path
 
 urlpatterns = [
@@ -10,5 +9,5 @@ urlpatterns = [
     path('checkout/', views.checkout, name="checkout"),
     path('process_order/', views.process_order, name="process_order"),
     path('client-delivery/', views.delivery, name="delivery"),
-   
+
 ]
