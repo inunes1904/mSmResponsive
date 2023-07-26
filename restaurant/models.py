@@ -1,5 +1,8 @@
+import decimal
 from django.db import models
 from user.models import Profile
+from datetime import datetime
+
 
 # Create your models here.
 
@@ -52,6 +55,7 @@ class Pedido(models.Model):
     pedido_entregue = models.BooleanField(default=False)
     numero_transacao = models.CharField(max_length=100, null=True, default=0000000)
     restaurante = models.ManyToManyField(Restaurante, blank=True)
+    fatura_enviada = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.id}"
@@ -69,11 +73,22 @@ class Pedido(models.Model):
         return total
     
     @property
+    def get_total_whithout_tax(self):
+        numero_items = self.itempedido_set.all()
+        total = sum([item.quantidade * item.item.preco for item in numero_items])
+        iva = decimal.Decimal('0.23')
+        real_total = total*(1-iva)
+        return round(real_total,2)
+    
+    @property
     def end_pedido(self):
         if not self.finalizado and self.pedido_pago and self.pedido_entregue:
             self.finalizado = True
+            self.data_conclusao = datetime.now()
             
-        
+    @property
+    def IVA_TAX(self):
+        return self.get_total - self.get_total_whithout_tax 
         
     
 class ItemPedido(models.Model):

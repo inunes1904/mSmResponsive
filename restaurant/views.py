@@ -1,18 +1,19 @@
 import datetime
 import json
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
-from .utils import getAllitems
+from .utils import getAllitems, send_info
 from .models import Restaurante, Item, Pedido, ItemPedido
 from django.contrib.auth.models import User
 from user.models import Profile
 from django.db.models import Q
 
 
+
+
 # Create your views here.
 
 def home(request, nmesa):
-
     user = request.user
     print(request.user.groups.filter(name="delivery").exists())
     if request.user.groups.filter(name="delivery").exists():
@@ -77,8 +78,6 @@ def restaurant(request, rest_id):
     else:
         restapi = True
         all_items = getAllitems(rest_to_check)
-    
-    
 
     context = {
         'items' : all_items,
@@ -94,7 +93,6 @@ def restaurant(request, rest_id):
 def cart(request):
 
     user = request.user
-
     nmesa = request.session['mesa']
     all_items_in_cart = ""
     pedido = None
@@ -120,7 +118,6 @@ def cart(request):
 def checkout(request):
 
     user = request.user
-
     nmesa = request.session['mesa']
     all_items_in_cart = ""
     pedido = None
@@ -158,10 +155,12 @@ def delivery(request):
         except:
             pedidos = Pedido.objects.filter(cliente=cliente, finalizado=False,
                                         pedido_pago=True, pedido_entregue=True)
-
-    print(len(pedidos))
+            
     for ped in pedidos:
-        print(ped)
+        if not ped.fatura_enviada:
+            send_info(request.user, ped)
+            ped.fatura_enviada = True
+            ped.save()
 
     context = {
         'mesa' : nmesa,
@@ -183,7 +182,8 @@ def update_item(request):
     item = Item.objects.get(id=item_id)
     
     pedido, created = Pedido.objects.get_or_create(cliente=cliente, finalizado=False,
-                                                    mesa=request.session['mesa'], pedido_pago=False)
+                                                    mesa=request.session['mesa'], 
+                                                    pedido_pago=False)
     
     item_pedido, created = ItemPedido.objects.get_or_create(pedido=pedido, item=item)
     
@@ -207,7 +207,8 @@ def process_order(request):
     if request.user.is_authenticated:
         cliente = request.user.profile
         pedido, created = Pedido.objects.get_or_create(cliente=cliente, 
-                                                       finalizado=False, pedido_pago=False)
+                                                       finalizado=False, 
+                                                       pedido_pago=False)
 
     total = float(data['form']['total'])
     pedido.numero_transacao = numero_transacao
@@ -215,10 +216,8 @@ def process_order(request):
   
     if total == float(pedido.get_total):
         pedido.pedido_pago = True
-        # TODO enviar emails
-        # sendEmail(request, pedido)
-   
+
     pedido.save()
-    
+
     return JsonResponse('Payment submitted.', safe=False)
 
