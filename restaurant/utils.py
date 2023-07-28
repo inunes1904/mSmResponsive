@@ -17,8 +17,8 @@ def send_info(user, pedido):
                 f'Pedido nº{pedido.numero_transacao}', 
                 f'Olá {pedido.cliente.nome},\nObrigado pela confiança.\n\n'+
                 'Clique no link em baixo para consultar a sua fatura.\n\n'+
-                f'< a href="http://127.0.0.1:8000/invoice/{encoded_user_id}/'+
-                f'{encoded_ped_transacao}/">Consulta a Fatura da sua compra</a>',
+                f'http://127.0.0.1:8000/invoice/{encoded_user_id}/'+
+                f'{encoded_ped_transacao}',
                 'mallsafemeals@gmail.com', 
                 [user.email]
                 )
