@@ -71,7 +71,13 @@
               {% endif %}
             {% endif %}
             {% if request.user.profile.role != 'delivery'  %}
-              <a href="{% url 'cart' %}" ><i  class="fa-solid fa-cart-shopping fa-2x corPrincipal my-4 mx-2" ></i></a>
+              <a href="{% url 'cart' %}" >
+                
+                <i  class="fa-solid fa-cart-shopping fa-2x corPrincipal my-4 mx-2" ></i></a>
+                {% if cartitems and cartitems > 0 %}
+                <span id="cartItems">&nbsp;{{cartitems}}&nbsp;</span>
+                {% endif %}
+                
             {% endif %}
           </div>
 

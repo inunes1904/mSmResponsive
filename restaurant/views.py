@@ -15,7 +15,7 @@ from django.db.models import Q
 
 def home(request, nmesa):
     user = request.user
-    print(request.user.groups.filter(name="delivery").exists())
+    
     if request.user.groups.filter(name="delivery").exists():
         redirect('home_delivery_crew') 
     try:
@@ -42,6 +42,7 @@ def home(request, nmesa):
                                                         Q(rating__gte=search_query)
                                                         )
     request.session['mesa'] = nmesa
+
     context={
         'restaurantes' : restaurantes,
         'mesa' : nmesa,
@@ -49,6 +50,15 @@ def home(request, nmesa):
         'user': str(user)
     }
     
+    try:
+        pedido = Pedido.objects.get(cliente=request.user.profile,finalizado=False, 
+                                    pedido_pago=False, mesa=nmesa)
+    except:
+        pedido = None
+
+    if request.user != 'AnonymousUser' and pedido is not None and pedido.get_numero_items > 0:
+        context['cartitems'] = pedido.get_numero_items
+        
     return render(request, 'index.html', context)
 
 def restaurant(request, rest_id):
@@ -86,7 +96,16 @@ def restaurant(request, rest_id):
         'restaurante' : rest_to_check,
         'user' : str(user)
     }
-    
+
+    try:
+        pedido = Pedido.objects.get(cliente=request.user.profile,finalizado=False, 
+                                    pedido_pago=False, mesa=nmesa)
+    except:
+        pedido = None
+
+    if request.user != 'AnonymousUser' and pedido is not None and pedido.get_numero_items > 0:
+        context['cartitems'] = pedido.get_numero_items
+
     return render(request, 'restaurant.html', context)
 
 
@@ -96,6 +115,8 @@ def cart(request):
     nmesa = request.session['mesa']
     all_items_in_cart = ""
     pedido = None
+
+
 
     if request.user.is_authenticated:
         cliente = Profile.objects.get(user=request.user.id)
@@ -111,6 +132,14 @@ def cart(request):
         'user' : str(user)
     }
     
+    try:
+        pedido = Pedido.objects.get(cliente=request.user.profile,finalizado=False, 
+                                    pedido_pago=False, mesa=nmesa)
+    except:
+        pedido = None
+
+    if request.user != 'AnonymousUser' and pedido is not None and pedido.get_numero_items > 0:
+        context['cartitems'] = pedido.get_numero_items
     return render(request, 'cart.html', context)
 
 
@@ -136,7 +165,14 @@ def checkout(request):
         'user' : str(user),
         'profile' : request.user.profile
     }
-    
+    try:
+        pedido = Pedido.objects.get(cliente=request.user.profile,finalizado=False, 
+                                    pedido_pago=False, mesa=nmesa)
+    except:
+        pedido = None
+
+    if request.user != 'AnonymousUser' and pedido is not None and pedido.get_numero_items > 0:
+        context['cartitems'] = pedido.get_numero_items
     return render(request, 'checkout.html', context)
 
 
@@ -175,7 +211,7 @@ def delivery(request):
 def update_item(request):
 
     data = json.loads(request.body)
-    print(data)
+    
     item_id = data['itemId']
     action = data['action']
     cliente = request.user.profile
